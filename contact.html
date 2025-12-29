@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./Assets/logo.png" type="image/x-icon">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap');
+
+        .formsec{
+            background-color: rgba(238, 151, 180, 0.916);
+            padding: 20px;
+            margin: 20px;
+            width: 500px;
+            opacity: 0.8;
+            font-family: "Oswald", sans-serif;
+            
+        }
+        .formsec input,.formsec textarea{
+            width: 50%;
+            padding: 10px 5px;
+            outline: none;
+        }
+        .boxinputs input{
+            width: inherit;
+        }
+        .boxinputsfields{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        form .feild{
+            padding: 10px 5px;
+            margin: 5px 0;
+        }
+        form button{
+            padding: 10px 30px;
+            margin: 10px 5px;
+            background-color:rgb(75, 69, 61);
+            color: #5fc29c;
+            border: none;
+            font-family: "Oswald", sans-serif;
+        }
+        .feild{
+            text-align: center;
+            align-items: center;
+            
+        }
+        
+        form button:hover{
+            background-color: rgb(2, 47, 23);
+        }
+        .error{
+            color: red;
+            font-size: 14px;
+        }
+        input.errorborder, textarea.errorborder{
+            border: 2px solid red;
+        }
+        input.successborder, textarea.successborder{
+            border: 2px solid green;
+        }
+        table{
+            border-collapse: collapse;
+        }
+        table ,thead,tbody,tr,td{
+            border: 1px solid black;
+            padding: 10px;
+        }
+        .en{
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            background-color: #5fc29c;
+            background-image: url(./Assets/img2.avif);
+            background-position: 100%;
+            width: 100%;
+        }
+
+        .formsec h2{
+            text-align: center;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+        <section class="en">
+            <div class="formsec">
+                <h2>Contact Us</h2>  
+                <form id="myregiform">
+                    <div class="feild">
+                        <label for="sname">Name:</label>
+                        <div>
+                            <input type="text" name="sname" id="studentName" placeholder="Enter Your Name">
+                            <p class="error" id="studentNameError"></p>
+                        </div>
+                    </div>
+                    <div  class="feild">
+                        <label for="sname">Email:</label>
+                        <div>
+                            <input type="email" name="semail" id="studentEmail" placeholder="Enter Your Email">
+                            <p class="error" id="studentEmailError"></p>
+                        </div>
+                    </div>
+                    <div class="feild">
+                        <label for="sname">Phone Number:</label>
+                        <div>
+                            <input type="tel" name="sphone" id="studentPhone" placeholder="Enter Your Phone">
+                            <p class="error" id="studentPhoneError"></p>
+                        </div>
+                    </div>
+                    <div class="feild">
+                        <label for="sname">Feedback:</label>
+                        <div>
+                           <textarea name="smgs" id="studentMessages" placeholder="Enter your Messages"></textarea>
+                            <p class="error" id="studentMessagesError"></p>
+                        </div>
+                    </div>
+                    <div class="feild">
+                        <button type="submit">Register Now</button>
+                   </div>
+                   </div>
+                </form>
+            </div>
+        </section>
+        <script>
+            function setError(id,mgs){
+                    document.getElementById(id).innerText = mgs;
+                    const input = id.replace("Error","");
+                    const inputfeild = document.getElementById(input);
+                    inputfeild.classList.add("errorborder");
+                    inputfeild.classList.remove("successborder");
+                };
+
+
+                const setSuccess =(id)=>{
+                    document.getElementById(id).innerText = "";
+                    const input = id.replace("Error","");
+                    const inputfeild = document.getElementById(input);
+                    inputfeild.classList.remove("errorborder");
+                    inputfeild.classList.add("successborder");
+                };
+
+
+
+
+                const mydata = document.getElementById("myregiform");
+                mydata.addEventListener("submit",(e)=>{
+                    e.preventDefault();
+
+
+                    let sname = document.getElementById("studentName").value.trim();
+                    let semai = document.getElementById("studentEmail").value.trim();
+                    let sphone = document.getElementById("studentPhone").value.trim();
+                    let scomment = document.getElementById("studentMessages").value.trim();
+                    // let sgenderfield = document.querySelector('input[name="gender"]:checked');
+                    // let sgender = sgenderfield ? sgenderfield.value: "";
+                    // let scourse =[];
+                    // let studencourse = document.querySelectorAll("input[name='scourse']:checked");
+                    // studencourse.forEach((c)=>scourse.push(c.value));
+
+
+                    let formFilled = true;
+                    let phonepattern = /^\d{10}$/;
+                    let emailpattern = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                    if(sname===""){
+                        setError("studentNameError","Please fill the Student Name Data");
+                        formFilled=false;
+                    }else{
+                        setSuccess("studentNameError");
+                    }
+
+
+                    // if(semai===""){
+                    if(!emailpattern.test(semai)){
+                        setError("studentEmailError","Please Fill The coorect email");
+                        formFilled=false;
+                    }
+                    else{
+                        setSuccess("studentEmailError");
+                    }
+
+
+                    if(sphone === ""){
+                        setError("studentPhoneError","Please Fill  Mobile number");
+                        formFilled=false;
+                    }
+                    else if(!phonepattern.test(sphone)){
+                        setError("studentPhoneError","Please Fill The correct Mobile number");
+                        formFilled=false;
+                    }
+                    else{
+                        setSuccess("studentPhoneError");
+                    }
+
+
+                    // let genderError = document.getElementById("studentGenderError");
+                    // if(!sgender){
+                    //     genderError.textContent="Please select any one gender";
+                    //     formFilled=false;
+                    // }
+                    // else{
+                    //     genderError.textContent="";
+                    // }
+
+
+                    // let courseError = document.getElementById("studentCourseError");
+                    // if(scourse.length === 0){
+                    //     courseError.innerText="Please choose atleat one course";
+                    //     formFilled=false;
+                    // }
+                    //  else{
+                    //     courseError.textContent="";
+                    // }
+                    if(scomment === ""){
+                        setError("studentMessagesError","Please Enter your Message");
+                        formFilled=false;
+                    }
+                    else if(scomment < 100){
+                         setError("studentMessagesError","Please Enter your Message below 100 words");
+                        formFilled=false;
+                    }
+                    else{
+                        setSuccess("studentMessagesError");
+                    }
+
+
+                    if(!formFilled){
+                        return
+                    }
+                    // let Formdata ={
+                    //     Name:sname,
+                    //     Email:semai,
+                    //     Phone:sphone,
+                    //     feedback:scomment
+                    // }
+                    console.log(sname);
+                    console.log(semai);
+                    console.log(sphone);
+                    console.log(scomment);
+                    alert("Thanyou for Your contact");
+                    // console.log(Formdata);
+                    mydata.reset();
+                });
+
+        </script>
+ 
+    </body>
+</html>       
+
+
